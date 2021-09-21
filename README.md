@@ -9,7 +9,7 @@ Simple agent that regularly outputs:
 - Memory usage in percent
 
 
-This agent only work on Linux 2.6 or higher (3.14 or higher for memory
+This program only works on Linux 2.6 or higher (3.14 or higher for memory
 usage) as it uses the `/proc/` interface to query system data. 
 
 ## Build
