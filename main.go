@@ -20,7 +20,7 @@ func main() {
 	go memoryUsage(c, conf.pollingPeriod)
 	go diskUsage(c, conf.pollingPeriod, conf.partition)
 	go networkUsage(c, conf.pollingPeriod, conf.networkInterface)
-	go printMetrics(c)
+	go printMetrics(c, conf.pollingPeriod)
 	//Todo: allow graceful shutdown
 	select {}
 }
@@ -76,8 +76,8 @@ type metricsOutput struct {
 }
 
 //printMetrics periodically prints the latest metrics in stdout
-func printMetrics(metrics chan metric) {
-	ticker := time.NewTicker(5 * time.Second) //or config.pollingPeriod ?
+func printMetrics(metrics chan metric, outputPeriod time.Duration) {
+	ticker := time.NewTicker(outputPeriod)
 	curentMetrics := map[string]metric{}
 	for {
 		select {
@@ -92,7 +92,7 @@ func printMetrics(metrics chan metric) {
 			}
 			fmt.Println(string(b))
 		case m := <-metrics:
-			//Note: metrics' names must be unique and stable over a program run
+			//Note: metrics' names must be unique
 			curentMetrics[m.Name] = m
 		}
 	}
