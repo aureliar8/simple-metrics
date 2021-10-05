@@ -17,8 +17,13 @@ func getNeworkStats(netInterface string) ([]metric, error) {
 	}
 	lines := strings.Split(string(b), "\n")
 	for _, line := range lines {
+
 		fields := strings.Fields(line)
 		if len(fields) == 0 {
+			//Do not count empty line as an error
+			if line == "" {
+				continue
+			}
 			return nil, fmt.Errorf("Invalid /proc/net/dev format")
 		}
 		if fields[0] == netInterface+":" {
