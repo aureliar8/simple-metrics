@@ -41,7 +41,7 @@ func getMemoryUsage() (metric, error) {
 			}
 			factor, err := unitFactor(fields[2])
 			if err != nil {
-				return m, nil
+				return m, err
 			}
 			total = value * factor
 		}

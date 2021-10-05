@@ -91,6 +91,8 @@ func printMetrics(metrics chan metric, outputPeriod time.Duration) {
 				log.Fatal(err)
 			}
 			fmt.Println(string(b))
+			//Empty current metrics
+			curentMetrics = map[string]metric{}
 		case m := <-metrics:
 			//Note: metrics' names must be unique
 			curentMetrics[m.Name] = m
